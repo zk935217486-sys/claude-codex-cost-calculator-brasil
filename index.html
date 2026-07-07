@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Calculadora Codex Claude Brasil</title>
+    <style>
+      :root {
+        --ink: #161019;
+        --paper: #f6faf4;
+        --pix: #32bcad;
+        --yellow: #ffcf32;
+        --line: #dbe6df;
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+      }
+
+      main {
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 42px 18px;
+      }
+
+      h1 {
+        max-width: 760px;
+        margin: 0 0 14px;
+        font-size: clamp(2.2rem, 7vw, 4.6rem);
+        line-height: 0.98;
+      }
+
+      p {
+        color: #4b5563;
+        font-size: 1.08rem;
+        line-height: 1.6;
+      }
+
+      .panel {
+        display: grid;
+        gap: 14px;
+        margin-top: 26px;
+        padding: 22px;
+        background: #ffffff;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        box-shadow: 8px 8px 0 var(--pix);
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 12px;
+      }
+
+      label {
+        display: grid;
+        gap: 6px;
+        font-weight: 800;
+      }
+
+      input {
+        min-height: 42px;
+        padding: 9px 11px;
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        font: inherit;
+      }
+
+      .result {
+        margin-top: 16px;
+        padding: 20px;
+        background: #11171f;
+        color: #ffffff;
+        border-radius: 8px;
+      }
+
+      .result strong {
+        display: block;
+        margin-top: 8px;
+        color: var(--yellow);
+        font-size: clamp(2rem, 6vw, 3.6rem);
+      }
+
+      a {
+        color: var(--ink);
+        font-weight: 900;
+      }
+
+      @media (max-width: 720px) {
+        .grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Calculadora Codex e Claude em BRL</h1>
+      <p>
+        Compare compra internacional com token ai Pix. Ajuste tarefas, tokens, câmbio e taxas para estimar economia
+        mensal em Real.
+      </p>
+
+      <section class="panel">
+        <div class="grid">
+          <label>Tarefas/mês <input id="tasks" type="number" value="120" /></label>
+          <label>Input tokens <input id="input" type="number" value="8000" /></label>
+          <label>Output tokens <input id="output" type="number" value="1200" /></label>
+          <label>Câmbio <input id="fx" type="number" value="5.5" step="0.01" /></label>
+          <label>IOF % <input id="iof" type="number" value="6.38" step="0.01" /></label>
+          <label>Spread % <input id="spread" type="number" value="4" step="0.1" /></label>
+        </div>
+        <div class="result">
+          Economia estimada
+          <strong id="saving">R$ 0,00</strong>
+          <span id="detail"></span>
+        </div>
+      </section>
+
+      <p>
+        Versão completa e token ai:
+        <a href="https://zk935217486-sys.github.io/api-ia-brasil-pix/ferramentas/calculadora-custo-codex-claude.html">
+          abrir calculadora web
+        </a>
+      </p>
+    </main>
+    <script type="module">
+      import { calculateCost, formatBRL } from "./src/calc.js";
+
+      const ids = ["tasks", "input", "output", "fx", "iof", "spread"];
+      function value(id) {
+        return Number(document.getElementById(id).value || 0);
+      }
+
+      function update() {
+        const result = calculateCost({
+          tasks: value("tasks"),
+          inputTokens: value("input"),
+          outputTokens: value("output"),
+          fx: value("fx"),
+          iofPercent: value("iof"),
+          spreadPercent: value("spread")
+        });
+        document.getElementById("saving").textContent = formatBRL(result.savingsBrl);
+        document.getElementById("detail").textContent =
+          `Internacional: ${formatBRL(result.officialBrl)} · token ai: ${formatBRL(result.tokenAiBrl)}`;
+      }
+
+      ids.forEach((id) => document.getElementById(id).addEventListener("input", update));
+      update();
+    </script>
+  </body>
+</html>
