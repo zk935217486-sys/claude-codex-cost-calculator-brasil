@@ -1,0 +1,20 @@
+[
+  {
+    "name": "Code review com Codex",
+    "tasks": 120,
+    "inputTokens": 8000,
+    "outputTokens": 1200
+  },
+  {
+    "name": "Chatbot com Claude",
+    "tasks": 900,
+    "inputTokens": 2200,
+    "outputTokens": 700
+  },
+  {
+    "name": "Resumo em lote",
+    "tasks": 240,
+    "inputTokens": 12000,
+    "outputTokens": 900
+  }
+]
