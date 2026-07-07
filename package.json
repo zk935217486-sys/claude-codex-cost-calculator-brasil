@@ -1,0 +1,21 @@
+{
+  "name": "claude-codex-cost-calculator-brasil",
+  "version": "1.0.0",
+  "description": "Calculadora PT-BR para comparar custo de tokens Codex e Claude em BRL, Pix, IOF e spread.",
+  "type": "module",
+  "bin": {
+    "ia-cost-br": "./bin/ia-cost-br.js"
+  },
+  "scripts": {
+    "start": "node bin/ia-cost-br.js",
+    "test": "node test/calc.test.js"
+  },
+  "keywords": [
+    "Claude API Brasil",
+    "Codex token barato",
+    "comprar token IA com Pix",
+    "calculadora custo IA",
+    "saldo API IA com Pix"
+  ],
+  "license": "MIT"
+}
